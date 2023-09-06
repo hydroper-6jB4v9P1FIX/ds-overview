@@ -1,6 +1,6 @@
 # Memory
 
-All types are passed by value by default.
+All types, excluding primitives, are reference types using reference counting.
 
 ## Copy
 
@@ -26,23 +26,20 @@ A type is cloned either by content (the trait `CloneContent` and method `clone_c
 
 ## Reference counting
 
-Using types as reference types is normally done via reference counting.
-
-Reference counting is a form of memory management that deallocates an object once it has zero references. The language supports the attribute `rc`, indicating that a struct or enum is a reference type performing reference counting.
+Reference counting is a form of memory management that deallocates an object once it has zero references. A struct, enum or tuple is a reference type performing reference counting.
 
 The following program demonstrates incrementing the field of a structure through a separate function:
 
 ```ds
-#[rc]
 struct S {
     mut x: f64 = 0.0,
 }
 
 fn main() {
     let object = S {};
-    print!("First x: {}", object.x);
+    print!("First x: {}", object.x); // 0.0
     increment_x(object.clone_ref());
-    print!("Final x: {}", object.x);
+    print!("Final x: {}", object.x); // 1.0
 }
 
 fn increment_x(object: S) {
@@ -50,12 +47,11 @@ fn increment_x(object: S) {
 }
 ```
 
-The native `rc_eq!` and `rc_ne!` macros may be necessary when working with reference counting to distinguish reference from actual content or, alternatively, the `RcEq` derive attribute can be used:
+Reference equality is tested for by using the auto implemented `RefEq` trait:
 
 ```ds
-#[rc]
-#[derive(RcEq)]
-struct S;
+object.ref_eq(another_object);
+object.ref_ne(another_object);
 ```
 
 ## Circular references
@@ -67,7 +63,6 @@ With reference counting, when an object can reference to another object recursiv
 `Weak<T>` can be often used to hold a _weak_ reference to a parent object:
 
 ```ds
-#[rc]
 struct Graph {
     mut parent: Weak<Graph> = Weak::empty(),
     children: [Graph] = [],
