@@ -29,12 +29,6 @@ The module path of a package is by default its name, replacing `.` by `::`. For 
 use com::q::b::S;
 ```
 
-## First-time package
-
-Any user can publish a package without any payment or actual registered domain; however, when a package is published for the first time it must be reviewed by the team to determine if it is legal or has good quality.
-
-The review queue is limited to 5 packages and may take anytime to be reviewed. If a package has been rejected, the user gets a cooldown of 2 days to publish any first-time package again.
-
 ## DSDoc
 
 Futurely the package manager should auto generate documentation using Docker containers and host it online.

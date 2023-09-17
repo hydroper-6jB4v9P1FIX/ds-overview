@@ -1,4 +1,4 @@
-# Collections
+# Collection types
 
 ## Array
 

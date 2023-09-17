@@ -1,4 +1,4 @@
-# Memory
+# Reference types
 
 All types, excluding primitives, are reference types using reference counting.
 
