@@ -5,3 +5,4 @@
 - [Memory](memory.md)
 - [Collections](collections.md)
 - [Primitive types](primitive-types.md)
+- [Futures](futures.md)
